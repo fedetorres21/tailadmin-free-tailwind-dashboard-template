@@ -1,0 +1,181 @@
+<div x-data="{
+      tab: 'contratos',
+      geoError: false,
+      loading: false,
+      corporateColor: '#5D9CC4',
+      contracts: [
+          { 
+              id: 1, 
+              name: 'Cdad. Prop. La Marina Urbis', 
+              address: 'Avda. Plaza De La Feria, 42-A, LAS PALMAS',
+              active: false
+          },
+          { 
+              id: 2, 
+              name: 'Cdad. Prop. Residencial Chalets La Cornisa', 
+              address: 'C/ Antonio María Manrique, 48, LAS PALMAS',
+              active: false
+          },
+          { 
+              id: 3, 
+              name: 'Cdad. Prop. La Marina Urbis', 
+              address: 'Avda. Plaza De La Feria, 42-A, LAS PALMAS',
+              active: false
+          },
+          { 
+              id: 4, 
+              name: 'Cdad. Prop. La Marina Urbis', 
+              address: 'Avda. Plaza De La Feria, 42-A, LAS PALMAS',
+              active: false
+          }
+      ],
+      init() {
+          this.checkGeoLocation();
+          // Simulate PHP logic: if (hasActiveShift) this.tab = 'salida';
+      },
+      checkGeoLocation() {
+          if (!navigator.geolocation) {
+              this.geoError = true;
+              return;
+          }
+          navigator.geolocation.getCurrentPosition(
+              (pos) => console.log(pos),
+              (err) => { this.geoError = true; }
+          );
+      },
+      fichar(type, id) {
+          this.loading = true;
+          console.log('Fichando:', type, id);
+          // Simulate API call
+          setTimeout(() => {
+              this.loading = false;
+              alert('Fichaje realizado (Simulación)');
+          }, 1000);
+      }
+  }" class="col-span-12 space-y-4">
+
+    <!-- Geolocation Warning -->
+    <div x-show="geoError" x-transition
+        class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
+        role="alert">
+        <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor" viewBox="0 0 20 20">
+            <path
+                d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+        </svg>
+        <span class="sr-only">Info</span>
+        <div>
+            <span class="font-medium">Atención!</span> No has permitido la geolocalización en tu navegador.
+        </div>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="mb-6 border-b border-gray-200 dark:border-gray-700">
+        <ul class="flex flex-wrap -mb-px text-base font-medium text-center" id="default-tab"
+            data-tabs-toggle="#default-tab-content" role="tablist">
+            <li class="me-2" role="presentation">
+                <button @click="tab = 'contratos'"
+                    :class="tab === 'contratos' ? 'border-[#5D9CC4] text-[#5D9CC4] bg-[#5D9CC4]/10' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'"
+                    class="inline-block p-4 border-b-2 rounded-t-lg transition-colors duration-200" id="contratos-tab"
+                    type="button">Contratos</button>
+            </li>
+            <li class="me-2" role="presentation">
+                <button @click="tab = 'actividad'"
+                    :class="tab === 'actividad' ? 'border-[#5D9CC4] text-[#5D9CC4] bg-[#5D9CC4]/10' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'"
+                    class="inline-block p-4 border-b-2 rounded-t-lg transition-colors duration-200" id="actividad-tab"
+                    type="button">Actividad</button>
+            </li>
+            <li class="me-2" role="presentation">
+                <button @click="tab = 'libre'"
+                    :class="tab === 'libre' ? 'border-[#5D9CC4] text-[#5D9CC4] bg-[#5D9CC4]/10' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'"
+                    class="inline-block p-4 border-b-2 rounded-t-lg transition-colors duration-200" id="libre-tab"
+                    type="button">Libre</button>
+            </li>
+            <li role="presentation">
+                <button @click="tab = 'eventos'"
+                    :class="tab === 'eventos' ? 'border-[#5D9CC4] text-[#5D9CC4] bg-[#5D9CC4]/10' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'"
+                    class="inline-block p-4 border-b-2 rounded-t-lg transition-colors duration-200" id="eventos-tab"
+                    type="button">
+                    Eventos
+                    <!-- PHP injection for badge would go here -->
+                    <span
+                        class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300 hidden">1</span>
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Tab Content: Contratos -->
+    <div x-show="tab === 'contratos'" x-transition.opacity.duration.300ms>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <!-- Iterate Contracts (Mock) -->
+            <template x-for="contract in contracts" :key="contract.id">
+                <div
+                    class="relative flex flex-col items-start p-6 bg-white border rounded-lg shadow-sm group hover:shadow-md transition-shadow duration-300 dark:bg-gray-800 dark:border-gray-700">
+                    <div class="flex-1 w-full mb-4">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+                            x-text="contract.name"></h5>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400 text-lg" x-text="contract.address">
+                        </p>
+                    </div>
+                    <button @click="fichar('contrato', contract.id)"
+                        class="w-full justify-center inline-flex items-center px-6 py-4 text-base font-bold text-center text-white rounded-lg hover:opacity-90 focus:ring-4 focus:outline-none focus:ring-blue-300 transition-opacity"
+                        style="background-color: #5D9CC4;">
+                        <span x-show="!loading">Fichar Entrada</span>
+                        <span x-show="loading">Procesando...</span>
+                        <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M1 5h12m0 0L9 1m4 4L9 9" />
+                        </svg>
+                    </button>
+                    <div class="absolute top-4 right-4 text-gray-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <!-- Tab Content: Actividad -->
+    <div x-show="tab === 'actividad'" x-transition.opacity.duration.300ms class="hidden"
+        :class="{'hidden': tab !== 'actividad'}">
+        <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+            <p class="text-gray-500 dark:text-gray-400">Seleccione una actividad para fichar (WIP).</p>
+        </div>
+    </div>
+
+    <!-- Tab Content: Libre -->
+    <div x-show="tab === 'libre'" x-transition.opacity.duration.300ms class="hidden"
+        :class="{'hidden': tab !== 'libre'}">
+        <div
+            class="p-6 bg-white border border-center text-center border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+            <button @click="fichar('libre', 0)"
+                class="inline-flex items-center justify-center w-40 h-40 rounded-full bg-green-500 hover:bg-green-600 text-white text-xl font-bold shadow-lg transition-transform transform hover:scale-105">
+                <div class="flex flex-col items-center">
+                    <svg class="w-8 h-8 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z">
+                        </path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Fichar Libre
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <!-- Tab Content: Eventos -->
+    <div x-show="tab === 'eventos'" x-transition.opacity.duration.300ms class="hidden"
+        :class="{'hidden': tab !== 'eventos'}">
+        <div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+            <p class="text-gray-500 dark:text-gray-400">No hay eventos pendientes.</p>
+        </div>
+    </div>
+
+</div>

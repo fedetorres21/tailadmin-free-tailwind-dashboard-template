@@ -10,19 +10,19 @@ const processNestedHtml = (content, loaderContext, dir = null) =>
   !INCLUDE_PATTERN.test(content)
     ? content
     : content.replace(INCLUDE_PATTERN, (m, src) => {
-        const filePath = path.resolve(dir || loaderContext.context, src);
-        loaderContext.dependency(filePath);
-        return processNestedHtml(
-          loaderContext.fs.readFileSync(filePath, "utf8"),
-          loaderContext,
-          path.dirname(filePath),
-        );
-      });
+      const filePath = path.resolve(dir || loaderContext.context, src);
+      loaderContext.dependency(filePath);
+      return processNestedHtml(
+        loaderContext.fs.readFileSync(filePath, "utf8"),
+        loaderContext,
+        path.dirname(filePath),
+      );
+    });
 
 // HTML generation
 const paths = [];
 const generateHTMLPlugins = () =>
-  glob.sync("./src/*.html").map((dir) => {
+  glob.sync("./src/views/*.html").map((dir) => {
     const filename = path.basename(dir);
 
     if (filename !== "404.html") {
@@ -31,7 +31,7 @@ const generateHTMLPlugins = () =>
 
     return new HtmlWebpackPlugin({
       filename,
-      template: `./src/${filename}`,
+      template: `./src/views/${filename}`,
       favicon: `./src/images/favicon.ico`,
       inject: "body",
     });
