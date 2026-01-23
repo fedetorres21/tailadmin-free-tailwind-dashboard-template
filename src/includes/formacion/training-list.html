@@ -1,0 +1,63 @@
+<div x-data="{
+    trainings: [
+        { titulo: 'Limpieza de cristales', descripcion: 'Manual completo sobre técnicas de limpieza de cristales en altura y superficies delicadas.', enlace: 'https://youtu.be/J7oeVlADzys' },
+        { titulo: 'Realizar partes de trabajo', descripcion: 'Guía paso a paso para la cumplimentación correcta de partes de trabajo diarios.', enlace: 'https://vimeo.com/80993527/e7fb76494f' },
+        { titulo: 'Fichaje y Registro Horario', descripcion: 'Instrucciones sobre el uso de la aplicación para el registro de jornada legal.', enlace: 'https://vimeo.com/655451324/11dacf7f11' },
+        { titulo: 'Acogida: Introducción', descripcion: 'Bienvenida a la empresa y presentación de los valores corporativos.', enlace: 'https://vimeo.com/624529833/846f83fa7d' },
+        { titulo: 'Instrucciones instalación APP', descripcion: 'Configuración inicial y permisos necesarios para el correcto funcionamiento de la plataforma.', enlace: 'https://vimeo.com/654070607/3ddc18a5b6' },
+        { titulo: 'Solicitud de Productos', descripcion: 'Cómo gestionar el pedido de materiales y consumibles necesarios para el servicio.', enlace: 'https://vimeo.com/656836594/01b67d19d3' },
+        { titulo: 'Solicitar Vacaciones', descripcion: 'Procedimiento para la solicitud y consulta de estado de periodos vacacionales.', enlace: 'https://vimeo.com/721167322/ddb59e9c8f' },
+        { titulo: 'Honorabilidad Personal', descripcion: 'Curso sobre conducta ética y responsabilidad profesional en el puesto de trabajo.', enlace: 'https://vimeo.com/644572455/4763b78661' },
+        { titulo: 'Acogida: Medios', descripcion: 'Explicación sobre los medios materiales y equipos de protección individual.', enlace: 'https://vimeo.com/640684986/66392e6430' }
+    ]
+}" class="col-span-12">
+
+    <!-- Page Header -->
+    <div class="mb-10">
+        <h2 class="text-3xl font-black text-gray-900 dark:text-white mb-2">Formación</h2>
+        <p class="text-gray-500 dark:text-gray-400">Accede a los vídeos de formación y manuales oficiales de la empresa.
+        </p>
+    </div>
+
+    <!-- Training Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <template x-for="(item, index) in trainings" :key="index">
+            <div
+                class="group relative bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-2xl hover:border-brand-500/30 transition-all duration-500 flex flex-col h-full">
+
+                <!-- Card Icon -->
+                <div class="mb-8">
+                    <div
+                        class="inline-flex p-4 rounded-2xl bg-brand-50 dark:bg-brand-900/20 text-brand-500 group-hover:bg-brand-500 group-hover:text-white transition-all duration-500">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z">
+                            </path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Card Content -->
+                <div class="flex-1">
+                    <h3 class="text-2xl font-black text-gray-900 dark:text-white leading-tight mb-4 group-hover:text-brand-500 transition-colors"
+                        x-text="item.titulo"></h3>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-8" x-text="item.descripcion">
+                    </p>
+                </div>
+
+                <!-- Card Action -->
+                <a :href="item.enlace" target="_blank"
+                    class="w-full inline-flex items-center justify-center px-6 py-4 text-sm font-black text-white bg-brand-500 hover:bg-brand-600 rounded-2xl shadow-lg shadow-brand-200 dark:shadow-none transition-all duration-300 group-hover:-translate-y-1">
+                    <span>Acceder a la Formación</span>
+                    <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                    </svg>
+                </a>
+            </div>
+        </template>
+    </div>
+</div>

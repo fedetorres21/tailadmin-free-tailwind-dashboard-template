@@ -3,21 +3,20 @@ const glob = require("glob");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-const INCLUDE_PATTERN =
-  /<include\s+src=["'](.+?)["']\s*\/?>\s*(?:<\/include>)?/gis;
-
-const processNestedHtml = (content, loaderContext, dir = null) =>
-  !INCLUDE_PATTERN.test(content)
-    ? content
-    : content.replace(INCLUDE_PATTERN, (m, src) => {
-      const filePath = path.resolve(dir || loaderContext.context, src);
-      loaderContext.dependency(filePath);
-      return processNestedHtml(
-        loaderContext.fs.readFileSync(filePath, "utf8"),
-        loaderContext,
-        path.dirname(filePath),
-      );
-    });
+const processNestedHtml = (content, loaderContext, dir = null) => {
+  const INCLUDE_PATTERN = /<include\s+src=["'](.+?)["']\s*\/?>\s*(?:<\/include>)?/gis;
+  if (!INCLUDE_PATTERN.test(content)) return content;
+  INCLUDE_PATTERN.lastIndex = 0;
+  return content.replace(INCLUDE_PATTERN, (m, src) => {
+    const filePath = path.resolve(dir || loaderContext.context, src);
+    loaderContext.dependency(filePath);
+    return processNestedHtml(
+      loaderContext.fs.readFileSync(filePath, "utf8"),
+      loaderContext,
+      path.dirname(filePath),
+    );
+  });
+};
 
 // HTML generation
 const paths = [];
@@ -69,11 +68,7 @@ module.exports = {
             loader: "postcss-loader",
             options: {
               postcssOptions: {
-                plugins: [
-                  require("autoprefixer")({
-                    overrideBrowserslist: ["last 2 versions"],
-                  }),
-                ],
+                plugins: [],
               },
             },
           },

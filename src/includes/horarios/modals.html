@@ -1,0 +1,145 @@
+<!-- Modals Container -->
+<div x-data="{ 
+    obsOpen: false, 
+    signOpen: false, 
+    activePunch: null 
+}" @open-obs.window="obsOpen = true; activePunch = $event.detail"
+    @open-sign.window="signOpen = true; activePunch = $event.detail">
+
+    <!-- Observations Modal -->
+    <div x-show="obsOpen"
+        class="fixed inset-0 z-99999 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+        x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" x-cloak>
+
+        <div class="bg-white dark:bg-gray-800 w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl"
+            @click.away="obsOpen = false">
+            <!-- Modal Header -->
+            <div class="px-8 py-6 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
+                <h3 class="text-xl font-black text-gray-900 dark:text-white">Detalles del Fichaje</h3>
+                <button @click="obsOpen = false"
+                    class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-8 space-y-8 max-h-[70vh] overflow-y-auto">
+                <template x-if="activePunch">
+                    <div class="space-y-8">
+                        <!-- Info Recap -->
+                        <div
+                            class="bg-brand-50/50 dark:bg-brand-900/10 p-5 rounded-2xl border border-brand-100/50 dark:border-brand-900/30">
+                            <p class="text-[10px] font-black text-brand-500 uppercase tracking-widest mb-2">Registro
+                                Seleccionado</p>
+                            <p class="text-lg font-black text-gray-900 dark:text-white leading-tight"
+                                x-text="activePunch.cliente"></p>
+                            <div class="flex items-center gap-3 mt-3">
+                                <span class="text-xs font-bold text-gray-500 dark:text-gray-400 flex items-center">
+                                    <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                        </path>
+                                    </svg>
+                                    <span x-text="activePunch.fechaInicio"></span>
+                                </span>
+                                <span class="w-1 h-1 rounded-full bg-gray-300"></span>
+                                <span class="text-xs font-bold text-brand-500"
+                                    x-text="'H. Entrada: ' + activePunch.horaInicio"></span>
+                            </div>
+                        </div>
+
+                        <!-- Observations List -->
+                        <div class="space-y-6">
+                            <!-- Observación Entrada -->
+                            <div class="group">
+                                <label
+                                    class="text-[10px] font-black text-gray-400 uppercase tracking-tighter mb-2 block px-1">Observación
+                                    de Entrada</label>
+                                <div class="bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 rounded-2xl p-4 text-sm text-gray-600 dark:text-gray-300 leading-relaxed italic"
+                                    x-text="activePunch.hasObs ? 'Revisión periódica de instalaciones completada sin incidencias.' : 'Sin observaciones.'">
+                                </div>
+                            </div>
+
+                            <!-- Observación Pausa -->
+                            <div class="group">
+                                <label
+                                    class="text-[10px] font-black text-gray-400 uppercase tracking-tighter mb-2 block px-1">Observación
+                                    de Pausa</label>
+                                <div
+                                    class="bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 rounded-2xl p-4 text-sm text-gray-400 dark:text-gray-500 leading-relaxed italic">
+                                    Sin observaciones registrada durante el descanso.</div>
+                            </div>
+
+                            <!-- Observación Salida -->
+                            <div class="group">
+                                <label
+                                    class="text-[10px] font-black text-gray-400 uppercase tracking-tighter mb-2 block px-1">Observación
+                                    de Salida</label>
+                                <div class="bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700 rounded-2xl p-4 text-sm text-gray-600 dark:text-gray-300 leading-relaxed italic"
+                                    x-text="activePunch.total !== '00:00' ? 'Servicio finalizado correctamente. Zona de trabajo despejada.' : 'Sin observaciones.'">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Modal Footer -->
+            <div
+                class="px-8 py-6 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-100 dark:border-gray-700 text-center">
+                <button @click="obsOpen = false"
+                    class="w-full px-6 py-4 bg-brand-500 text-white rounded-2xl text-sm font-black hover:bg-brand-600 shadow-lg shadow-brand-200 dark:shadow-none transition-all duration-300">Cerrar
+                    Detalles</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signature Modal -->
+    <div x-show="signOpen"
+        class="fixed inset-0 z-99999 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+        x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" x-cloak>
+
+        <div class="bg-white dark:bg-gray-800 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl"
+            @click.away="signOpen = false">
+            <!-- Modal Header -->
+            <div class="px-8 py-6 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
+                <h3 class="text-xl font-black text-gray-900 dark:text-white">Firma del Cliente</h3>
+                <button @click="signOpen = false" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-10 flex flex-col items-center">
+                <div
+                    class="w-full aspect-[3/2] bg-gray-50 dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-700 flex items-center justify-center mb-8 overflow-hidden">
+                    <!-- Dummy Signature SVG -->
+                    <svg class="w-3/4 h-3/4 text-gray-800 dark:text-white transition-all duration-700"
+                        viewBox="0 0 100 60" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M10 40 Q 25 10 40 40 T 70 40 Q 85 10 90 30" stroke-linecap="round" />
+                        <path d="M20 50 L 80 50" stroke="currentColor" stroke-width="0.5" stroke-dasharray="2 2" />
+                    </svg>
+                </div>
+                <button @click="signOpen = false"
+                    class="w-full px-6 py-4 bg-brand-500 text-white rounded-2xl text-sm font-black hover:bg-brand-600 shadow-lg shadow-brand-200 dark:shadow-none transition-all">Cerrar
+                    vista</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    [x-cloak] {
+        display: none !important;
+    }
+</style>

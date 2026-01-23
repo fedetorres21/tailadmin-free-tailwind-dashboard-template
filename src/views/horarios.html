@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Horarios | IGM - Portal del Empleado</title>
+</head>
+
+<body x-data="{ page: 'horarios', 'sidebarToggle': false, 'scrollTop': false }" x-init="
+         scrollTop = window.pageYOffset > 50;
+         window.addEventListener('scroll', () => { scrollTop = window.pageYOffset > 50 });
+      " :class="{ 'dark text-bodydark bg-boxdark-2': false }">
+    <!-- ===== Preloader Start ===== -->
+    <include src="../includes/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="flex h-screen overflow-hidden">
+        <!-- ===== Sidebar Start ===== -->
+        <include src="../includes/sidebar.html"></include>
+        <!-- ===== Sidebar End ===== -->
+
+        <!-- ===== Content Area Start ===== -->
+        <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+            <!-- ===== Header Start ===== -->
+            <include src="../includes/header.html"></include>
+            <!-- ===== Header End ===== -->
+
+            <!-- ===== Main Content Start ===== -->
+            <main>
+                <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+                    <div class="grid grid-cols-12 gap-6">
+                        <include src="../includes/horarios/punch-list.html"></include>
+                    </div>
+                </div>
+            </main>
+            <!-- ===== Main Content End ===== -->
+
+            <!-- ===== Modals Start ===== -->
+            <include src="../includes/horarios/modals.html"></include>
+            <!-- ===== Modals End ===== -->
+        </div>
+        <!-- ===== Content Area End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+</body>
+
+</html>
