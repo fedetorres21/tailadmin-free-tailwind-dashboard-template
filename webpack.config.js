@@ -1,4 +1,5 @@
 const path = require("path");
+// Trigger rebuild for new document view
 const glob = require("glob");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");

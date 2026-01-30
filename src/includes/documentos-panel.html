@@ -1,0 +1,168 @@
+<div x-data="{
+    currentTab: 'documentos',
+    tabs: [
+        { id: 'documentos', name: 'Documentos' },
+        { id: 'firmados', name: 'Documentos Firmados' },
+        { id: 'nominas', name: 'Nóminas' },
+        { id: 'cuadrantes', name: 'Cuadrantes' }
+    ],
+    selectedMonth: '',
+    selectedYear: '',
+    months: [
+        { id: 1, name: 'Enero' }, { id: 2, name: 'Febrero' }, { id: 3, name: 'Marzo' },
+        { id: 4, name: 'Abril' }, { id: 5, name: 'Mayo' }, { id: 6, name: 'Junio' },
+        { id: 7, name: 'Julio' }, { id: 8, name: 'Agosto' }, { id: 9, name: 'Septiembre' },
+        { id: 10, name: 'Octubre' }, { id: 11, name: 'Noviembre' }, { id: 12, name: 'Diciembre' }
+    ],
+    get years() {
+        const currentYear = new Date().getFullYear();
+        return Array.from({length: 5}, (_, i) => currentYear - i);
+    },
+    allDocuments: {
+        documentos: [
+            { id: 1, name: 'Modelo 145 - 2025.pdf', date: '09/01/2025', description: 'Modelo 145', type: 'pdf' },
+            { id: 2, name: 'Contrato Prórroga 2024.pdf', date: '15/12/2024', description: 'Ampliación jornada', type: 'pdf' }
+        ],
+        firmados: [
+            { id: 3, name: 'Contrato Formación Firmado.pdf', date: '01/10/2024', description: 'Copia firmada', type: 'pdf' },
+            { id: 4, name: 'PRL Recibido.pdf', date: '05/10/2024', description: 'Prevención Riesgos', type: 'pdf' }
+        ],
+        nominas: [
+            { id: 5, name: 'nomina alejandro santana octubre 2023.pdf', date: '03/10/2023', description: 'detalle salario', type: 'pdf' },
+            { id: 6, name: 'nomina alejandro santana septiembre 2023.pdf', date: '02/09/2023', description: 'detalle salario', type: 'pdf' }
+        ],
+        cuadrantes: [
+            { id: 7, name: 'Cuadrante Febrero 2025.pdf', date: '25/01/2025', description: 'Turnos mensuales', type: 'pdf' },
+            { id: 8, name: 'Cuadrante Enero 2025.pdf', date: '20/12/2024', description: 'Turnos mensuales', type: 'pdf' }
+        ]
+    },
+    get filteredDocuments() {
+        return this.allDocuments[this.currentTab].filter(doc => {
+            const [day, month, year] = doc.date.split('/');
+            
+            // Check Month Filter
+            const monthMatch = this.selectedMonth === '' || parseInt(month) == this.selectedMonth;
+            
+            // Check Year Filter
+            const yearMatch = this.selectedYear === '' || parseInt(year) == this.selectedYear;
+            
+            return monthMatch && yearMatch;
+        });
+    }
+}" class="col-span-12 space-y-6">
+
+    <!-- Header & Filters -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h2 class="text-2xl font-black text-gray-900 dark:text-white"
+                x-text="tabs.find(t => t.id === currentTab).name"></h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Gestión y descarga de archivos personales</p>
+        </div>
+
+        <!-- Date Filters -->
+        <div class="flex gap-3 w-full md:w-auto">
+            <div class="relative w-full md:w-40">
+                <select x-model="selectedMonth"
+                    class="w-full appearance-none pl-4 pr-10 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all shadow-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                    <option value="">Todos los meses</option>
+                    <template x-for="m in months" :key="m.id">
+                        <option :value="m.id" x-text="m.name"></option>
+                    </template>
+                </select>
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="relative w-full md:w-32">
+                <select x-model="selectedYear"
+                    class="w-full appearance-none pl-4 pr-10 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition-all shadow-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                    <option value="">Todos</option>
+                    <template x-for="y in years" :key="y">
+                        <option :value="y" x-text="y"></option>
+                    </template>
+                </select>
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="bg-white dark:bg-gray-800 p-1.5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+        <ul class="grid grid-cols-2 gap-2 md:flex md:flex-wrap text-sm font-semibold text-center" role="tablist">
+            <template x-for="t in tabs" :key="t.id">
+                <li class="flex-1">
+                    <button @click="currentTab = t.id"
+                        :class="currentTab === t.id ? 'bg-brand-500 text-white shadow-md' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700'"
+                        class="w-full inline-block px-4 py-3 rounded-xl transition-all duration-300 capitalize h-full flex items-center justify-center"
+                        x-text="t.name"></button>
+                </li>
+            </template>
+        </ul>
+    </div>
+
+    <!-- Document List -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <template x-for="doc in filteredDocuments" :key="doc.id">
+            <div
+                class="group bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl p-5 shadow-sm hover:shadow-xl hover:border-brand-500/30 transition-all duration-300">
+                <div class="flex items-start gap-4 mb-4">
+                    <!-- File Icon -->
+                    <div
+                        class="p-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-xl group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                    </div>
+
+                    <div class="flex-1 min-w-0">
+                        <h4 class="text-sm font-bold text-gray-900 dark:text-white truncate" x-text="doc.name"></h4>
+                        <p class="text-[12px] text-gray-500 dark:text-gray-400 mt-0.5" x-text="doc.description"></p>
+                        <div class="flex items-center gap-1.5 mt-2">
+                            <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            <span
+                                class="text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-tighter"
+                                x-text="doc.date"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <button
+                    class="w-full py-2.5 px-4 bg-gray-50 dark:bg-gray-900/50 hover:bg-brand-500 hover:text-white dark:hover:bg-brand-500 text-brand-500 text-sm font-bold rounded-xl transition-all duration-300 border border-transparent hover:shadow-lg flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                    </svg>
+                    <span>Descargar</span>
+                </button>
+            </div>
+        </template>
+
+        <!-- Empty State -->
+        <template x-if="filteredDocuments.length === 0">
+            <div class="col-span-full py-12 flex flex-col items-center justify-center">
+                <div class="p-6 bg-gray-50 dark:bg-gray-800/50 rounded-full text-gray-300 dark:text-gray-600 mb-4">
+                    <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="text-gray-500 dark:text-gray-400 font-medium">No se han encontrado documentos.</p>
+            </div>
+        </template>
+    </div>
+</div>

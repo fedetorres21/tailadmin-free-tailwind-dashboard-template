@@ -101,12 +101,11 @@
         x-transition:enter-start="opacity-0 -translate-y-2"
         class="flex items-center p-4 text-sm text-red-800 border border-red-200 rounded-xl bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-900 shadow-sm"
         role="alert">
-        <svg class="flex-shrink-0 inline w-5 h-5 me-3" fill="currentColor" viewBox="0 0 20 20">
+        <svg class="shrink-0 inline w-5 h-5 me-3" fill="currentColor" viewBox="0 0 20 20">
             <path
                 d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
         </svg>
-        <span><span class="font-bold">¡Atención!</span> No has permitido la geolocalización en tu navegador. El fichaje
-            podría ser invalidado.</span>
+        <span><span class="font-bold">¡Atención!</span> No has permitido la geolocalización en tu navegador.</span>
     </div>
 
     <!-- Header Tabs -->
@@ -115,7 +114,7 @@
             <template x-for="t in ['contratos', 'actividad', 'libre', 'eventos']">
                 <li class="flex-1">
                     <button @click="tab = t"
-                        :class="tab === t ? 'bg-[#5D9CC4] text-white shadow-md' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700'"
+                        :class="tab === t ? 'bg-brand-500 text-white shadow-md' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700'"
                         class="w-full inline-block px-4 py-3 rounded-xl transition-all duration-300 capitalize"
                         x-text="t"></button>
                 </li>
@@ -129,13 +128,13 @@
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
             <template x-for="contract in contracts" :key="contract.id">
                 <div
-                    class="group relative flex flex-col p-6 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:border-[#5D9CC4]/30 transition-all duration-300 dark:bg-gray-800 dark:border-gray-700">
+                    class="group relative flex flex-col p-6 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:border-brand-500/30 transition-all duration-300 dark:bg-gray-800 dark:border-gray-700">
                     <div class="flex-1 mb-6">
                         <div class="flex items-start justify-between">
                             <h5 class="text-xl font-extrabold tracking-tight text-black dark:text-white leading-tight"
                                 x-text="contract.name"></h5>
                             <button @click="openSchedule(contract)"
-                                class="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-[#5D9CC4] hover:bg-[#5D9CC4] hover:text-white transition-all duration-300">
+                                class="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-brand-500 hover:bg-brand-500 hover:text-white transition-all duration-300">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -143,7 +142,7 @@
                             </button>
                         </div>
                         <p class="mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 flex items-start">
-                            <svg class="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                            <svg class="w-4 h-4 mr-2 mt-0.5 shrink-0" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
@@ -155,7 +154,7 @@
                         </p>
                     </div>
                     <button @click="openModal(contract)"
-                        class="w-full inline-flex items-center justify-center px-6 py-4 text-lg font-bold text-white rounded-xl bg-[#5D9CC4] hover:bg-[#4a89b1] shadow-lg shadow-blue-200 dark:shadow-none transform group-hover:-translate-y-1 transition-all duration-300">
+                        class="w-full inline-flex items-center justify-center px-6 py-4 text-lg font-bold text-white rounded-xl bg-brand-500 hover:bg-[#4a89b1] shadow-lg shadow-blue-200 dark:shadow-none transform group-hover:-translate-y-1 transition-all duration-300">
                         <span>Fichar entrada</span>
                         <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none"
                             stroke="currentColor" viewBox="0 0 24 24">
@@ -174,12 +173,12 @@
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
             <template x-for="item in activity" :key="item.id">
                 <div
-                    class="group relative flex flex-col p-6 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:border-[#5D9CC4]/30 transition-all duration-300 dark:bg-gray-800 dark:border-gray-700">
+                    class="group relative flex flex-col p-6 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:border-brand-500/30 transition-all duration-300 dark:bg-gray-800 dark:border-gray-700">
                     <div class="flex-1 mb-6">
                         <div class="flex items-start justify-between">
                             <h5 class="text-xl font-extrabold tracking-tight text-black dark:text-white leading-tight"
                                 x-text="item.name"></h5>
-                            <div class="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-[#5D9CC4]">
+                            <div class="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-brand-500">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
@@ -188,7 +187,7 @@
                             </div>
                         </div>
                         <p class="mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 flex items-start">
-                            <svg class="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                            <svg class="w-4 h-4 mr-2 mt-0.5 shrink-0" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -197,7 +196,7 @@
                         </p>
                     </div>
                     <button @click="openModal(item)"
-                        class="w-full inline-flex items-center justify-center px-6 py-4 text-lg font-bold text-white rounded-xl bg-[#5D9CC4] hover:bg-[#4a89b1] shadow-lg shadow-blue-200 dark:shadow-none transform group-hover:-translate-y-1 transition-all duration-300">
+                        class="w-full inline-flex items-center justify-center px-6 py-4 text-lg font-bold text-white rounded-xl bg-brand-500 hover:bg-[#4a89b1] shadow-lg shadow-blue-200 dark:shadow-none transform group-hover:-translate-y-1 transition-all duration-300">
                         <span>Fichar actividad</span>
                         <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none"
                             stroke="currentColor" viewBox="0 0 24 24">
@@ -215,7 +214,7 @@
         x-transition:enter-start="opacity-0 translate-y-4">
         <div
             class="flex flex-col items-center justify-center p-12 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-3xl shadow-sm space-y-8">
-            <div class="p-6 bg-blue-50 dark:bg-blue-900/20 rounded-full text-[#5D9CC4] animate-pulse">
+            <div class="p-6 bg-blue-50 dark:bg-blue-900/20 rounded-full text-brand-500 animate-pulse">
                 <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -229,7 +228,7 @@
                 </p>
             </div>
             <button @click="openModal({ name: 'Fichaje Libre' }, true)"
-                class="group relative inline-flex items-center justify-center px-10 py-6 text-xl font-black text-white rounded-2xl bg-[#5D9CC4] hover:bg-[#4a89b1] shadow-2xl shadow-blue-200 dark:shadow-none transition-all duration-300 hover:-translate-y-1 active:scale-95">
+                class="group relative inline-flex items-center justify-center px-10 py-6 text-xl font-black text-white rounded-2xl bg-brand-500 hover:bg-[#4a89b1] shadow-2xl shadow-blue-200 dark:shadow-none transition-all duration-300 hover:-translate-y-1 active:scale-95">
                 <span>Registrar Entrada Libre</span>
                 <svg class="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform" fill="none"
                     stroke="currentColor" viewBox="0 0 24 24">
@@ -248,7 +247,7 @@
 
     <!-- MODAL FICHAR -->
     <div x-show="modalOpen"
-        class="fixed inset-0 z-[999999] flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto outline-none focus:outline-none"
+        class="fixed inset-0 z-999999 flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto outline-none focus:outline-none"
         style="display: none;" x-cloak>
 
         <!-- Backdrop -->
@@ -270,7 +269,7 @@
             <div class="px-8 py-8">
                 <div class="mb-6 text-center">
                     <div
-                        class="inline-flex items-center justify-center w-16 h-16 bg-blue-50 dark:bg-blue-900/30 text-[#5D9CC4] rounded-2xl mb-4">
+                        class="inline-flex items-center justify-center w-16 h-16 bg-blue-50 dark:bg-blue-900/30 text-brand-500 rounded-2xl mb-4">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -287,7 +286,7 @@
                         <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 ml-1">Nombre del
                             Cliente</label>
                         <input type="text" x-model="clientName"
-                            class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#5D9CC4] focus:border-transparent transition-all outline-none"
+                            class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all outline-none"
                             placeholder="Nombre del cliente o servicio...">
                     </div>
 
@@ -295,7 +294,7 @@
                         <label
                             class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2 ml-1">Observaciones</label>
                         <textarea x-model="observations" rows="3"
-                            class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#5D9CC4] focus:border-transparent transition-all outline-none resize-none"
+                            class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all outline-none resize-none"
                             placeholder="Escribe alguna observación relevante..."></textarea>
                     </div>
 
@@ -305,7 +304,7 @@
                             Cancelar
                         </button>
                         <button @click="confirmarFichaje()" :disabled="loading"
-                            class="flex-1 px-6 py-4 text-sm font-bold text-white bg-[#5D9CC4] hover:bg-[#4a89b1] rounded-xl shadow-lg shadow-blue-200 dark:shadow-none transition-all flex items-center justify-center">
+                            class="flex-1 px-6 py-4 text-sm font-bold text-white bg-brand-500 hover:bg-[#4a89b1] rounded-xl shadow-lg shadow-blue-200 dark:shadow-none transition-all flex items-center justify-center">
                             <span x-show="!loading">Confirmar Fichaje</span>
                             <span x-show="loading" class="flex items-center">
                                 <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
@@ -326,7 +325,7 @@
 
     <!-- MODAL HORARIO SEMANAL -->
     <div x-show="scheduleModalOpen"
-        class="fixed inset-0 z-[999999] flex items-center justify-center p-4 overflow-x-hidden overflow-y-auto outline-none focus:outline-none"
+        class="fixed inset-0 z-999999 flex items-start md:items-center justify-center p-4 overflow-x-hidden overflow-y-auto outline-none focus:outline-none"
         style="display: none;" x-cloak>
 
         <!-- Backdrop -->
@@ -345,20 +344,21 @@
             x-transition:leave-end="opacity-0 scale-95 translate-y-4"
             class="relative w-full max-w-2xl bg-white dark:bg-gray-800 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 overflow-hidden">
 
-            <div class="px-8 py-8">
+            <div class="px-5 py-6 md:px-8 md:py-8">
                 <!-- Header -->
-                <div class="flex items-start justify-between mb-8">
+                <div class="flex items-start justify-between mb-6 md:mb-8">
                     <div class="flex items-center">
-                        <div class="p-3 bg-blue-50 dark:bg-blue-900/30 text-[#5D9CC4] rounded-2xl mr-4">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="p-2 md:p-3 bg-blue-50 dark:bg-blue-900/30 text-brand-500 rounded-2xl mr-4">
+                            <svg class="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
                         <div>
-                            <h3 class="text-2xl font-black text-gray-900 dark:text-white leading-tight">Horario
+                            <h3 class="text-xl md:text-2xl font-black text-gray-900 dark:text-white leading-tight">
+                                Horario
                                 Semanal</h3>
-                            <p class="text-[#5D9CC4] font-bold text-sm" x-text="selectedContractForSchedule?.name">
+                            <p class="text-brand-500 font-bold text-sm" x-text="selectedContractForSchedule?.name">
                             </p>
                         </div>
                     </div>
@@ -371,70 +371,135 @@
                     </button>
                 </div>
 
-                <!-- Schedule Table -->
-                <div class="overflow-hidden border border-gray-100 dark:border-gray-700 rounded-2xl">
-                    <table class="w-full text-sm text-left">
-                        <thead class="bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-400 font-bold">
-                            <tr>
-                                <th class="px-4 py-4">Día</th>
-                                <th class="px-4 py-4 text-center border-l dark:border-gray-600">Mañana</th>
-                                <th class="px-4 py-4 text-center border-l dark:border-gray-600">Tarde</th>
-                            </tr>
-                            <tr class="bg-gray-100/50 dark:bg-gray-800/50 text-[10px] uppercase tracking-wider">
-                                <th class="px-4 py-2"></th>
-                                <th class="px-4 py-2 text-center border-l dark:border-gray-600 font-medium">Entrada
-                                    / Salida</th>
-                                <th class="px-4 py-2 text-center border-l dark:border-gray-600 font-medium">Entrada
-                                    / Salida</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
-                            <template x-for="row in weeklySchedule" :key="row.day">
-                                <tr class="hover:bg-gray-50/50 dark:hover:bg-gray-700/30 transition-colors">
-                                    <td class="px-4 py-4 font-bold text-gray-900 dark:text-white" x-text="row.day">
-                                    </td>
-                                    <td class="px-4 py-4 text-center border-l dark:border-gray-700 tabular-nums">
-                                        <template x-if="row.m_in !== '-'">
-                                            <div class="flex items-center justify-center space-x-2">
-                                                <span
-                                                    class="px-2 py-1 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-md"
-                                                    x-text="row.m_in"></span>
-                                                <span class="text-gray-400">-</span>
-                                                <span
-                                                    class="px-2 py-1 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-md"
-                                                    x-text="row.m_out"></span>
-                                            </div>
-                                        </template>
-                                        <template x-if="row.m_in === '-'">
-                                            <span class="text-gray-300 dark:text-gray-600">-- : --</span>
-                                        </template>
-                                    </td>
-                                    <td class="px-4 py-4 text-center border-l dark:border-gray-700 tabular-nums">
-                                        <template x-if="row.a_in !== '-'">
-                                            <div class="flex items-center justify-center space-x-2">
-                                                <span
-                                                    class="px-2 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-md"
-                                                    x-text="row.a_in"></span>
-                                                <span class="text-gray-300">-</span>
-                                                <span
-                                                    class="px-2 py-1 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-md"
-                                                    x-text="row.a_out"></span>
-                                            </div>
-                                        </template>
-                                        <template x-if="row.a_in === '-'">
-                                            <span class="text-gray-300 dark:text-gray-600">-- : --</span>
-                                        </template>
-                                    </td>
+                <!-- Schedule Container -->
+                <div class="space-y-4">
+                    <!-- Desktop Table View (Visible on md and up) -->
+                    <div
+                        class="hidden md:block overflow-hidden border border-gray-100 dark:border-gray-700 rounded-2xl">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-400 font-bold">
+                                <tr>
+                                    <th class="px-4 py-4">Día</th>
+                                    <th class="px-4 py-4 text-center border-l dark:border-gray-600">Mañana</th>
+                                    <th class="px-4 py-4 text-center border-l dark:border-gray-600">Tarde</th>
                                 </tr>
-                            </template>
-                        </tbody>
-                    </table>
+                                <tr class="bg-gray-100/50 dark:bg-gray-800/50 text-[10px] uppercase tracking-wider">
+                                    <th class="px-4 py-2"></th>
+                                    <th class="px-4 py-2 text-center border-l dark:border-gray-600 font-medium">Entrada
+                                        / Salida</th>
+                                    <th class="px-4 py-2 text-center border-l dark:border-gray-600 font-medium">Entrada
+                                        / Salida</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                                <template x-for="row in weeklySchedule" :key="row.day">
+                                    <tr class="hover:bg-gray-50/50 dark:hover:bg-gray-700/30 transition-colors">
+                                        <td class="px-4 py-4 font-bold text-gray-900 dark:text-white" x-text="row.day">
+                                        </td>
+                                        <td class="px-4 py-4 text-center border-l dark:border-gray-700 tabular-nums">
+                                            <template x-if="row.m_in !== '-'">
+                                                <div class="flex items-center justify-center space-x-2">
+                                                    <span
+                                                        class="px-2 py-1 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-md"
+                                                        x-text="row.m_in"></span>
+                                                    <span class="text-gray-400">-</span>
+                                                    <span
+                                                        class="px-2 py-1 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-md"
+                                                        x-text="row.m_out"></span>
+                                                </div>
+                                            </template>
+                                            <template x-if="row.m_in === '-'">
+                                                <span class="text-gray-300 dark:text-gray-600">-- : --</span>
+                                            </template>
+                                        </td>
+                                        <td class="px-4 py-4 text-center border-l dark:border-gray-700 tabular-nums">
+                                            <template x-if="row.a_in !== '-'">
+                                                <div class="flex items-center justify-center space-x-2">
+                                                    <span
+                                                        class="px-2 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-md"
+                                                        x-text="row.a_in"></span>
+                                                    <span class="text-gray-300">-</span>
+                                                    <span
+                                                        class="px-2 py-1 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-md"
+                                                        x-text="row.a_out"></span>
+                                                </div>
+                                            </template>
+                                            <template x-if="row.a_in === '-'">
+                                                <span class="text-gray-300 dark:text-gray-600">-- : --</span>
+                                            </template>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Mobile Card View (Visible only on small screens) -->
+                    <div class="block md:hidden space-y-3">
+                        <template x-for="row in weeklySchedule" :key="row.day">
+                            <div
+                                class="p-4 bg-gray-50 dark:bg-gray-700/30 rounded-2xl border border-gray-100 dark:border-gray-700">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-base font-black text-gray-900 dark:text-white"
+                                        x-text="row.day"></span>
+                                    <span x-show="row.m_in === '-' && row.a_in === '-'"
+                                        class="text-[10px] font-bold text-gray-400 uppercase tracking-widest bg-gray-200/50 dark:bg-gray-600/50 px-2 py-0.5 rounded-full">Libre</span>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-3" x-show="row.m_in !== '-' || row.a_in !== '-'">
+                                    <!-- Mañana -->
+                                    <div class="space-y-1.5">
+                                        <span
+                                            class="text-[9px] font-black text-gray-400 uppercase tracking-widest pl-1">Mañana</span>
+                                        <div
+                                            class="flex items-center justify-center space-x-2 p-2 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 tabular-nums min-h-[36px]">
+                                            <template x-if="row.m_in !== '-'">
+                                                <div class="flex items-center justify-between w-full">
+                                                    <span class="text-xs font-bold text-green-600 dark:text-green-400"
+                                                        x-text="row.m_in"></span>
+                                                    <span class="text-gray-300 font-medium">-</span>
+                                                    <span class="text-xs font-bold text-red-600 dark:text-red-400"
+                                                        x-text="row.m_out"></span>
+                                                </div>
+                                            </template>
+                                            <template x-if="row.m_in === '-'">
+                                                <span
+                                                    class="text-xs font-medium text-gray-300 dark:text-gray-600">--:--</span>
+                                            </template>
+                                        </div>
+                                    </div>
+
+                                    <!-- Tarde -->
+                                    <div class="space-y-1.5">
+                                        <span
+                                            class="text-[9px] font-black text-gray-400 uppercase tracking-widest pl-1">Tarde</span>
+                                        <div
+                                            class="flex items-center justify-center space-x-2 p-2 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 tabular-nums min-h-[36px]">
+                                            <template x-if="row.a_in !== '-'">
+                                                <div class="flex items-center justify-between w-full">
+                                                    <span class="text-xs font-bold text-blue-600 dark:text-blue-400"
+                                                        x-text="row.a_in"></span>
+                                                    <span class="text-gray-300 font-medium">-</span>
+                                                    <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400"
+                                                        x-text="row.a_out"></span>
+                                                </div>
+                                            </template>
+                                            <template x-if="row.a_in === '-'">
+                                                <span
+                                                    class="text-xs font-medium text-gray-300 dark:text-gray-600">--:--</span>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
                 </div>
 
                 <!-- Footer -->
                 <div class="mt-8 flex justify-end">
                     <button @click="scheduleModalOpen = false"
-                        class="px-8 py-4 text-sm font-bold text-white bg-[#5D9CC4] hover:bg-[#4a89b1] rounded-xl shadow-lg shadow-blue-200 dark:shadow-none transition-all">
+                        class="px-8 py-4 text-sm font-bold text-white bg-brand-500 hover:bg-[#4a89b1] rounded-xl shadow-lg shadow-blue-200 dark:shadow-none transition-all">
                         Cerrar Horario
                     </button>
                 </div>

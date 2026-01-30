@@ -96,9 +96,9 @@
 
           <!-- Menu Item Documentos -->
           <li>
-            <a href="#" @click.prevent="selected = (selected === 'Documentos' ? '':'Documentos')"
+            <a href="documentos.html" @click="selected = (selected === 'Documentos' ? '':'Documentos')"
               class="menu-item group"
-              :class=" (selected === 'Documentos') || (page === 'nominas' || page === 'certificados') ? 'menu-item-active' : 'menu-item-inactive'">
+              :class=" (selected === 'Documentos') || (page === 'documentos') ? 'menu-item-active' : 'menu-item-inactive'">
               <svg
                 :class="(selected === 'Documentos') || (page === 'nominas' || page === 'certificados') ? 'menu-item-icon-active'  :'menu-item-icon-inactive'"
                 width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -123,27 +123,19 @@
             <div class="translate transform overflow-hidden" :class="(selected === 'Documentos') ? 'block' :'hidden'">
               <ul :class="sidebarToggle ? 'lg:hidden' : 'flex'" class="menu-dropdown mt-2 flex flex-col gap-1 pl-9">
                 <li>
-                  <a href="#" class="menu-dropdown-item group"
-                    :class="page === 'nominas' ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'">
-                    Nóminas
-                    <span class="absolute right-3 flex items-center gap-1">
-                      <span class="menu-dropdown-badge"
-                        :class="page === 'nominas' ? 'menu-dropdown-badge-active' : 'menu-dropdown-badge-inactive'">
-                        Pro
-                      </span>
-                    </span>
+                  <a href="documentos.html" class="menu-dropdown-item group"
+                    :class="page === 'documentos' ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'">
+                    Ver Todos
                   </a>
                 </li>
                 <li>
-                  <a href="#" class="menu-dropdown-item group"
-                    :class="page === 'certificados' ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'">
-                    Certificados
-                    <span class="absolute right-3 flex items-center gap-1">
-                      <span class="menu-dropdown-badge"
-                        :class="page === 'certificados' ? 'menu-dropdown-badge-active' : 'menu-dropdown-badge-inactive'">
-                        Pro
-                      </span>
-                    </span>
+                  <a href="documentos.html" class="menu-dropdown-item group">
+                    Nóminas
+                  </a>
+                </li>
+                <li>
+                  <a href="documentos.html" class="menu-dropdown-item group">
+                    Cuadrantes
                   </a>
                 </li>
               </ul>
@@ -181,7 +173,7 @@
             <div class="translate transform overflow-hidden" :class="(selected === 'Vacaciones') ? 'block' :'hidden'">
               <ul :class="sidebarToggle ? 'lg:hidden' : 'flex'" class="menu-dropdown mt-2 flex flex-col gap-1 pl-9">
                 <li>
-                  <a href="#" class="menu-dropdown-item group"
+                  <a href="vacaciones.html" class="menu-dropdown-item group"
                     :class="page === 'vacacionesSolicitar' ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'">
                     Solicitar
                   </a>
