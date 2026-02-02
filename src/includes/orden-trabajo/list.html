@@ -1,0 +1,132 @@
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div>
+            <h1 class="text-3xl font-black text-gray-900 dark:text-white">Ordenes de Trabajo</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Gestión de partes y servicios pendientes</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <span
+                class="flex items-center gap-2 px-3 py-1.5 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-lg text-xs font-bold border border-green-100 dark:border-green-800">
+                <span class="relative flex h-2 w-2">
+                    <span
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                </span>
+                Activas ahora
+            </span>
+        </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+        <template x-for="wo in workOrders" :key="wo.id">
+            <div class="group relative bg-white dark:bg-gray-800 border-2 transition-all duration-300 rounded-4xl p-8 overflow-hidden flex flex-col items-center text-center"
+                :class="wo.status === 'in_progress' ? 'border-green-500 shadow-xl scale-[1.02]' : 'border-gray-100 dark:border-gray-700 hover:border-brand-500/50 hover:shadow-lg'"
+                x-data="{ showInfo: false, showKeys: false }">
+                <!-- Priority Star -->
+                <template x-if="wo.priority">
+                    <div class="absolute top-0 right-0 p-4">
+                        <svg class="w-8 h-8 text-yellow-500 drop-shadow-sm" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                            </path>
+                        </svg>
+                    </div>
+                </template>
+
+                <!-- Top Icons: Info & Keys -->
+                <div class="flex items-center gap-4 mb-6">
+                    <!-- Info Button -->
+                    <div class="relative">
+                        <button @click="showInfo = !showInfo; showKeys = false"
+                            class="p-3 rounded-2xl bg-orange-50 dark:bg-orange-900/20 text-orange-500 hover:bg-orange-100 transition-colors shadow-sm">
+                            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Keys Button -->
+                    <template x-if="wo.hasKeys">
+                        <div class="relative">
+                            <button @click="showKeys = !showKeys; showInfo = false"
+                                class="p-3 rounded-2xl bg-gray-100 dark:bg-gray-700 text-gray-500 hover:bg-gray-200 transition-colors shadow-sm">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L7 17l-1 1V15l2.257-2.257A6 6 0 1121 9z">
+                                    </path>
+                                </svg>
+                            </button>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Dropdown-like panels for Info/Keys -->
+                <div x-show="showInfo" x-collapse
+                    class="w-full mb-6 p-4 bg-orange-50/50 dark:bg-orange-900/10 rounded-3xl border border-orange-100 dark:border-orange-900/30">
+                    <p class="text-xs font-black text-orange-600 dark:text-orange-400 uppercase tracking-widest mb-2">
+                        Dirección del Centro</p>
+                    <a :href="'https://www.google.es/maps/search/' + encodeURIComponent(wo.address)" target="_blank"
+                        class="text-sm font-bold text-gray-700 dark:text-gray-200 hover:text-brand-500 underline decoration-brand-500/30 line-clamp-2">
+                        <svg class="w-4 h-4 inline-block mr-1 -mt-1" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span x-text="wo.address"></span>
+                    </a>
+                </div>
+
+                <div x-show="showKeys" x-collapse
+                    class="w-full mb-6 p-4 bg-gray-50 dark:bg-gray-900/50 rounded-3xl border border-gray-100 dark:border-gray-700">
+                    <p class="text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Llaves asociadas</p>
+                    <div class="flex flex-wrap justify-center gap-2">
+                        <template x-for="key in wo.keys" :key="key">
+                            <span
+                                class="px-3 py-1 bg-white dark:bg-gray-800 rounded-full text-xs font-black text-gray-600 dark:text-gray-300 border border-gray-100 dark:border-gray-700"
+                                x-text="key"></span>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Content Centralized -->
+                <div class="mb-4">
+                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-2"
+                        x-text="'Parte: ' + wo.code + ' / Orden: ' + wo.ordCode"></p>
+                    <h2 class="text-2xl font-black text-gray-900 dark:text-white leading-tight mb-2"
+                        x-text="wo.customer">
+                    </h2>
+                    <h3 class="text-lg font-bold text-gray-500 dark:text-gray-400" x-text="wo.center"></h3>
+                </div>
+
+                <div class="space-y-2 mb-8">
+                    <div class="flex flex-col items-center">
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Fecha prevista</p>
+                        <div class="flex items-center gap-2">
+                            <span class="text-base font-black text-gray-700 dark:text-gray-200" x-text="wo.date"></span>
+                            <template x-if="wo.id === 2">
+                                <svg class="w-5 h-5 text-red-500 animate-pulse" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                                    </path>
+                                </svg>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <button @click="startWorkOrder(wo)"
+                    class="w-full max-w-[200px] py-4 bg-brand-500 hover:bg-brand-600 active:scale-95 text-white text-lg font-black rounded-2xl shadow-xl shadow-brand-500/20 transition-all duration-300">
+                    Entrar
+                </button>
+            </div>
+        </template>
+    </div>
+</div>

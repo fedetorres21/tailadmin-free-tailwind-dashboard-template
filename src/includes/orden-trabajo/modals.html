@@ -1,0 +1,208 @@
+<!-- Info Modal -->
+<div x-show="showInfoModal" x-cloak
+    class="fixed inset-0 z-99999 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+    x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
+    x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200"
+    x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
+    <div @click.outside="showInfoModal = false"
+        class="bg-white dark:bg-gray-800 rounded-[2.5rem] w-full max-w-lg overflow-hidden shadow-2xl border border-gray-100 dark:border-gray-700">
+        <div class="p-8 space-y-8">
+            <div class="flex items-start justify-between">
+                <div>
+                    <h2 class="text-3xl font-black text-gray-900 dark:text-white" x-text="infoModalData?.name"></h2>
+                    <p class="text-sm font-bold text-brand-500 uppercase tracking-widest mt-1">Especificaciones Técnicas
+                    </p>
+                </div>
+                <button @click="showInfoModal = false"
+                    class="p-2 text-gray-400 hover:text-gray-900 dark:hover:text-white transition">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Utensilios -->
+                <div class="flex gap-4">
+                    <div class="p-3 bg-brand-50 dark:bg-brand-900/20 text-brand-500 rounded-2xl shrink-0 h-fit">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 00-1 1v1a2 2 0 11-4 0v-1a1 1 0 00-1-1H7a1 1 0 01-1-1v-3a1 1 0 011-1h1a2 2 0 100-4H7a1 1 0 01-1-1V7a1 1 0 011-1h3a1 1 0 001-1V4z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-black text-gray-400 uppercase tracking-widest mb-1">Utensilios</h4>
+                        <p class="text-gray-700 dark:text-gray-200 font-bold"
+                            x-text="infoModalData?.utensils || 'No especificado'"></p>
+                    </div>
+                </div>
+
+                <!-- Maquinaria -->
+                <div class="flex gap-4">
+                    <div class="p-3 bg-blue-50 dark:bg-blue-900/20 text-blue-500 rounded-2xl shrink-0 h-fit">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.82.557l-.21.21a2 2 0 000 2.828l.21.21a2 2 0 002.828 0l.21-.21a2 2 0 00.557-1.82l-.328-1.554a2 2 0 011.82-2.179l2.42-.484a6 6 0 013.86.517l.318.158a6 6 0 003.86.517l2.42.484a2 2 0 011.82 2.179l-.328 1.554a2 2 0 00.557 1.82l.21.21a2 2 0 002.828 0l.21-.21a2 2 0 000-2.828l-.21-.21z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-black text-gray-400 uppercase tracking-widest mb-1">Maquinaria</h4>
+                        <p class="text-gray-700 dark:text-gray-200 font-bold"
+                            x-text="infoModalData?.machinery || 'No especificada'"></p>
+                    </div>
+                </div>
+
+                <!-- Información PRL -->
+                <div class="flex gap-4">
+                    <div class="p-3 bg-red-50 dark:bg-red-900/20 text-red-500 rounded-2xl shrink-0 h-fit">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-black text-gray-400 uppercase tracking-widest mb-1">Información PRL</h4>
+                        <p class="text-gray-700 dark:text-gray-200 font-bold"
+                            x-text="infoModalData?.prl || 'Sin requerimientos especiales'"></p>
+                    </div>
+                </div>
+            </div>
+
+            <button @click="showInfoModal = false"
+                class="w-full py-5 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-black rounded-2xl transition-all duration-300 uppercase tracking-widest">Entendido</button>
+        </div>
+    </div>
+</div>
+
+<!-- Operator Signature Modal -->
+<div x-show="showOperatorSignatureModal" x-cloak
+    class="fixed inset-0 z-99999 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+    x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-8"
+    x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200"
+    x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-8">
+    <div @click.outside="showOperatorSignatureModal = false"
+        class="bg-white dark:bg-gray-800 rounded-[2.5rem] w-full max-w-2xl overflow-y-auto max-h-[90vh] shadow-2xl border border-gray-100 dark:border-gray-700">
+        <div class="p-8 md:p-12 space-y-10">
+            <div class="flex items-start justify-between">
+                <div>
+                    <h2 class="text-4xl font-black text-gray-900 dark:text-white leading-tight">Firma Operario</h2>
+                    <p class="text-sm font-bold text-gray-400 uppercase tracking-widest mt-2">Validación de inicio de
+                        trabajo</p>
+                </div>
+                <button @click="showOperatorSignatureModal = false"
+                    class="p-2 text-gray-400 hover:text-gray-900 dark:hover:text-white transition">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="space-y-8">
+                <!-- Signature Pad Mock -->
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between px-2">
+                        <label class="block text-sm font-black text-gray-500 uppercase tracking-widest">Firma del
+                            Operario</label>
+                        <button class="text-gray-400 hover:text-red-500 transition">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div
+                        class="w-full h-64 md:h-80 bg-gray-50 dark:bg-gray-900/50 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-[2.5rem] relative flex items-center justify-center overflow-hidden cursor-crosshair group">
+                        <span
+                            class="text-gray-300 dark:text-gray-600 font-bold group-hover:hidden transition-all uppercase tracking-widest text-center">Dibuje
+                            su firma aquí para empezar</span>
+                        <!-- Canvas overlay for aesthetic -->
+                        <div class="absolute inset-0 bg-transparent"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <button @click="showOperatorSignatureModal = false"
+                    class="py-6 bg-red-500 hover:bg-red-600 text-white font-black rounded-3xl shadow-xl shadow-red-500/30 transition-all duration-300 uppercase tracking-widest active:scale-95">Atrás</button>
+                <button
+                    @click="showOperatorSignatureModal = false; selectedWorkOrder.isStarted = true; $dispatch('start-timer')"
+                    class="py-6 bg-brand-500 hover:bg-brand-600 text-white font-black rounded-3xl shadow-xl shadow-brand-500/30 transition-all duration-300 uppercase tracking-widest active:scale-95">Empezar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Signature Modal -->
+<div x-show="showSignatureModal" x-cloak
+    class="fixed inset-0 z-99999 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+    x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-8"
+    x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200"
+    x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-8">
+    <div @click.outside="showSignatureModal = false"
+        class="bg-white dark:bg-gray-800 rounded-[2.5rem] w-full max-w-2xl overflow-y-auto max-h-[90vh] shadow-2xl border border-gray-100 dark:border-gray-700">
+        <div class="p-8 md:p-12 space-y-10">
+            <div class="flex items-start justify-between">
+                <div>
+                    <h2 class="text-4xl font-black text-gray-900 dark:text-white leading-tight">Finalizar Servicio</h2>
+                    <p class="text-sm font-bold text-gray-400 uppercase tracking-widest mt-2">Firma y validación del
+                        cliente</p>
+                </div>
+                <button @click="showSignatureModal = false"
+                    class="p-2 text-gray-400 hover:text-gray-900 dark:hover:text-white transition">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="space-y-8">
+                <!-- Name of Respondent -->
+                <div class="space-y-3">
+                    <label class="block text-sm font-black text-gray-500 uppercase tracking-widest px-2">Responsable que
+                        firma</label>
+                    <input type="text" placeholder="Nombre completo del cliente..."
+                        class="w-full bg-gray-50 dark:bg-gray-900/50 border-2 border-transparent focus:border-brand-500 rounded-3xl p-6 text-lg font-bold text-gray-900 dark:text-white transition outline-none shadow-inner" />
+                </div>
+
+                <!-- Signature Pad Mock -->
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between px-2">
+                        <label class="block text-sm font-black text-gray-500 uppercase tracking-widest">Firma del
+                            Cliente</label>
+                        <button class="text-xs font-bold text-red-500 uppercase hover:underline">Limpiar firma</button>
+                    </div>
+                    <div
+                        class="w-full h-64 md:h-80 bg-gray-50 dark:bg-gray-900/50 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-[2.5rem] relative flex items-center justify-center overflow-hidden cursor-crosshair group">
+                        <span
+                            class="text-gray-300 dark:text-gray-600 font-bold group-hover:hidden transition-all uppercase tracking-widest">Dibuje
+                            la firma aquí</span>
+                        <!-- Canvas overlay for aesthetic -->
+                        <div class="absolute inset-0 bg-transparent"></div>
+                    </div>
+                </div>
+
+                <!-- Comments -->
+                <div class="space-y-3">
+                    <label class="block text-sm font-black text-gray-500 uppercase tracking-widest px-2">Comentarios /
+                        Observaciones</label>
+                    <textarea rows="4" placeholder="Alguna nota adicional sobre el servicio..."
+                        class="w-full bg-gray-50 dark:bg-gray-900/50 border-2 border-transparent focus:border-brand-500 rounded-3xl p-6 text-lg font-bold text-gray-900 dark:text-white transition outline-none shadow-inner resize-none"></textarea>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <button @click="showSignatureModal = false"
+                    class="py-6 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-black rounded-3xl transition-all duration-300 uppercase tracking-widest">Atrás</button>
+                <button @click="showSignatureModal = false; view = 'list'"
+                    class="py-6 bg-brand-500 hover:bg-brand-600 text-white font-black rounded-3xl shadow-xl shadow-brand-500/30 transition-all duration-300 uppercase tracking-widest">TERMINAR
+                    Y ENVIAR</button>
+            </div>
+        </div>
+    </div>
+</div>

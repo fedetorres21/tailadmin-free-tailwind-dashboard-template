@@ -96,8 +96,7 @@
 
           <!-- Menu Item Documentos -->
           <li>
-            <a href="documentos.html" @click="selected = (selected === 'Documentos' ? '':'Documentos')"
-              class="menu-item group"
+            <a href="documentos.html" @click="selected = 'Documentos'" class="menu-item group"
               :class=" (selected === 'Documentos') || (page === 'documentos') ? 'menu-item-active' : 'menu-item-inactive'">
               <svg
                 :class="(selected === 'Documentos') || (page === 'nominas' || page === 'certificados') ? 'menu-item-icon-active'  :'menu-item-icon-inactive'"
@@ -110,37 +109,7 @@
               <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
                 Documentos
               </span>
-
-              <svg class="menu-item-arrow"
-                :class="[(selected === 'Documentos') ? 'menu-item-arrow-active' : 'menu-item-arrow-inactive', sidebarToggle ? 'lg:hidden' : '' ]"
-                width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4.79175 7.39584L10.0001 12.6042L15.2084 7.39585" stroke="" stroke-width="1.5"
-                  stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
             </a>
-
-            <!-- Dropdown Menu Start -->
-            <div class="translate transform overflow-hidden" :class="(selected === 'Documentos') ? 'block' :'hidden'">
-              <ul :class="sidebarToggle ? 'lg:hidden' : 'flex'" class="menu-dropdown mt-2 flex flex-col gap-1 pl-9">
-                <li>
-                  <a href="documentos.html" class="menu-dropdown-item group"
-                    :class="page === 'documentos' ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'">
-                    Ver Todos
-                  </a>
-                </li>
-                <li>
-                  <a href="documentos.html" class="menu-dropdown-item group">
-                    Nóminas
-                  </a>
-                </li>
-                <li>
-                  <a href="documentos.html" class="menu-dropdown-item group">
-                    Cuadrantes
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <!-- Dropdown Menu End -->
           </li>
           <!-- Menu Item Documentos -->
 
@@ -173,15 +142,21 @@
             <div class="translate transform overflow-hidden" :class="(selected === 'Vacaciones') ? 'block' :'hidden'">
               <ul :class="sidebarToggle ? 'lg:hidden' : 'flex'" class="menu-dropdown mt-2 flex flex-col gap-1 pl-9">
                 <li>
-                  <a href="vacaciones.html" class="menu-dropdown-item group"
+                  <a href="vacaciones.html?view=solicitar" class="menu-dropdown-item group"
                     :class="page === 'vacacionesSolicitar' ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'">
-                    Solicitar
+                    Solicitar vacaciones
                   </a>
                 </li>
                 <li>
-                  <a href="#" class="menu-dropdown-item group"
-                    :class="page === 'vacacionesEstado' ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'">
-                    Estado
+                  <a href="vacaciones.html?view=firmar" class="menu-dropdown-item group"
+                    :class="page === 'vacacionesFirmar' ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'">
+                    Firmar vacaciones
+                  </a>
+                </li>
+                <li>
+                  <a href="vacaciones.html?view=mis-vacaciones" class="menu-dropdown-item group"
+                    :class="page === 'vacacionesMis' ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'">
+                    Mis vacaciones
                   </a>
                 </li>
               </ul>
@@ -191,9 +166,9 @@
           <!-- Menu Item Vacaciones -->
 
           <!-- Menu Item Orden de trabajo -->
+          <!-- Menu Item Orden de trabajo -->
           <li>
-            <a href="#" @click.prevent="selected = (selected === 'OrdenTrabajo' ? '':'OrdenTrabajo')"
-              class="menu-item group"
+            <a href="orden-trabajo.html" @click="selected = 'OrdenTrabajo'" class="menu-item group"
               :class="(selected === 'OrdenTrabajo') || (page === 'ordenTrabajoListado' || page === 'ordenTrabajoNuevo') ? 'menu-item-active' : 'menu-item-inactive'">
               <svg
                 :class="(selected === 'OrdenTrabajo') || (page === 'ordenTrabajoListado' || page === 'ordenTrabajoNuevo') ? 'menu-item-icon-active'  :'menu-item-icon-inactive'"
@@ -206,39 +181,7 @@
               <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
                 Orden de trabajo
               </span>
-
-              <svg class="menu-item-arrow absolute right-2.5 top-1/2 -translate-y-1/2 stroke-current"
-                :class="[(selected === 'OrdenTrabajo') ? 'menu-item-arrow-active' : 'menu-item-arrow-inactive', sidebarToggle ? 'lg:hidden' : '' ]"
-                width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4.79175 7.39584L10.0001 12.6042L15.2084 7.39585" stroke="" stroke-width="1.5"
-                  stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
             </a>
-
-            <!-- Dropdown Menu Start -->
-            <div class="translate transform overflow-hidden" :class="(selected === 'OrdenTrabajo') ? 'block' :'hidden'">
-              <ul :class="sidebarToggle ? 'lg:hidden' : 'flex'" class="menu-dropdown mt-2 flex flex-col gap-1 pl-9">
-                <li>
-                  <a href="#" class="menu-dropdown-item group"
-                    :class="page === 'ordenTrabajoListado' ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'">
-                    Listado
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="menu-dropdown-item group"
-                    :class="page === 'ordenTrabajoNuevo' ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'">
-                    Nuevo
-                    <span class="absolute right-3 flex items-center gap-1">
-                      <span class="menu-dropdown-badge"
-                        :class="page === 'ordenTrabajoNuevo' ? 'menu-dropdown-badge-active' : 'menu-dropdown-badge-inactive'">
-                        Pro
-                      </span>
-                    </span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <!-- Dropdown Menu End -->
           </li>
           <!-- Menu Item Orden de trabajo -->
 

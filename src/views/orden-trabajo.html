@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Orden de Trabajo - Portal Empleado v2</title>
+</head>
+
+<body x-data="{ 
+        view: 'list', 
+        page: 'ordenTrabajoListado', 
+        'loaded': true, 
+        'darkMode': false, 
+        'stickyMenu': false, 
+        'sidebarToggle': false, 
+        'scrollTop': false,
+        selectedWorkOrder: null,
+        workOrders: [
+            { 
+                id: 1, 
+                code: 'PART12740', 
+                ordCode: 'ORD-9982',
+                customer: 'Grupo Alarcón', 
+                center: 'Pandora C.C. El Mirador', 
+                nc: 'Grupo Alarcón',
+                address: 'C.C. El Mirador, Local 42, Las Palmas',
+                date: '08/10/2025', 
+                time: '09:00',
+                status: 'in_progress',
+                priority: true,
+                hasKeys: true,
+                keys: ['123', 'A-45'],
+                isStarted: true,
+                services: [
+                    { 
+                        id: 101, 
+                        name: 'Cristales consultas', 
+                        frequency: 'Mensual', 
+                        image: '/Users/fedetorres/.gemini/antigravity/brain/d17c241d-3234-4cca-bfc3-7b250bfb80ed/service_window_cleaning_1770031060354.png',
+                        utensils: 'Limpia cristales, mojador, bayeta microfibra, rascador.',
+                        machinery: 'No requiere maquinaria pesada.',
+                        prl: 'Uso de guantes, calzado antideslizante, señalización de suelo mojado.',
+                        plannedDate: '08/10/2025'
+                    },
+                    { 
+                        id: 102, 
+                        name: 'Cristales de escaparates', 
+                        frequency: 'Semanal', 
+                        image: '/Users/fedetorres/.gemini/antigravity/brain/d17c241d-3234-4cca-bfc3-7b250bfb80ed/service_window_cleaning_1770031060354.png',
+                        utensils: 'Pértiga telescópica, agua osmotizada.',
+                        machinery: 'Plataforma elevadora (si fuera necesario).',
+                        prl: 'Trabajos en altura, uso de arnés, delimitación de zona de trabajo.',
+                        plannedDate: '08/10/2025'
+                    },
+                    {
+                        id: 103,
+                        name: 'Puertas enrollables',
+                        frequency: 'Trimestral',
+                        image: '/Users/fedetorres/.gemini/antigravity/brain/d17c241d-3234-4cca-bfc3-7b250bfb80ed/service_rolling_door_1770031185166.png',
+                        utensils: 'Desengrasante industrial, cepillos de cerdas duras.',
+                        machinery: 'Hidrolimpiadora a presión.',
+                        prl: 'Protección ocular, guantes químicos.',
+                        plannedDate: '08/10/2025'
+                    }
+                ]
+            },
+            { 
+                id: 2, 
+                code: 'PART12738', 
+                ordCode: 'ORD3258',
+                customer: 'Sania Servicios Integrales De Mantenimiento Y Limpieza', 
+                center: 'Punto Roma 249 Mesa y López', 
+                nc: 'Sania',
+                address: 'Avda. José Mesa y López, 10, 35006, LAS PALMAS',
+                date: '10/10/2025', 
+                time: '10:30',
+                status: 'pending',
+                priority: false,
+                hasKeys: false,
+                keys: [],
+                isStarted: false,
+                services: [
+                    { 
+                        id: 201, 
+                        name: 'Escaparate frontal', 
+                        frequency: 'Semanal', 
+                        image: '/Users/fedetorres/.gemini/antigravity/brain/d17c241d-3234-4cca-bfc3-7b250bfb80ed/service_window_cleaning_1770031060354.png',
+                        utensils: 'Limpia cristales, mojador.',
+                        machinery: 'Escalera de mano.',
+                        prl: 'Señalización de zona.',
+                        plannedDate: '10/10/2025'
+                    }
+                ]
+            }
+        ],
+        showInfoModal: false,
+        infoModalData: null,
+        showSignatureModal: false,
+        showOperatorSignatureModal: false,
+        startWorkOrder(wo) {
+            this.selectedWorkOrder = JSON.parse(JSON.stringify(wo)); // Deep copy
+            this.selectedWorkOrder.startTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            this.view = 'detail';
+        }
+    }" x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'dark bg-gray-900': darkMode === true}">
+
+    <!-- ===== Preloader Start ===== -->
+    <include src="../includes/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="flex h-screen overflow-hidden">
+        <!-- ===== Sidebar Start ===== -->
+        <include src="../includes/sidebar.html"></include>
+        <!-- ===== Sidebar End ===== -->
+
+        <!-- ===== Content Area Start ===== -->
+        <div class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
+            <!-- Small Device Overlay Start -->
+            <include src="../includes/overlay.html" />
+            <!-- Small Device Overlay End -->
+
+            <!-- ===== Header Start ===== -->
+            <include src="../includes/header.html" />
+            <!-- ===== Header End ===== -->
+
+            <!-- ===== Main Content Start ===== -->
+            <main>
+                <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6 lg:p-8">
+
+                    <!-- View Dispatcher -->
+                    <template x-if="view === 'list'">
+                        <include src="../includes/orden-trabajo/list.html" />
+                    </template>
+
+                    <template x-if="view === 'detail'">
+                        <include src="../includes/orden-trabajo/detail.html" />
+                    </template>
+
+                </div>
+            </main>
+            <!-- ===== Main Content End ===== -->
+        </div>
+        <!-- ===== Content Area End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+
+    <!-- Modals -->
+    <include src="../includes/orden-trabajo/modals.html" />
+
+</body>
+
+</html>
