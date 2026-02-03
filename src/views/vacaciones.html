@@ -7,13 +7,37 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Vacaciones - Portal Empleado v2</title>
+    <script>
+        function getVacacionesData() {
+            const params = new URLSearchParams(window.location.search);
+            const view = params.get('view') || 'solicitar';
+            let page = 'vacacionesSolicitar';
+
+            if (view === 'firmar') page = 'vacacionesFirmar';
+            else if (view === 'mis-vacaciones') page = 'vacacionesMis';
+
+            let darkMode = false;
+            try {
+                darkMode = JSON.parse(localStorage.getItem('darkMode'));
+            } catch (e) {
+                console.warn('LocalStorage access denied', e);
+            }
+
+            return {
+                page: page,
+                view: view,
+                loaded: true,
+                darkMode: darkMode || false,
+                stickyMenu: false,
+                sidebarToggle: false,
+                scrollTop: false
+            };
+        }
+    </script>
 </head>
 
-<body
-    x-data="{ page: 'vacacionesSolicitar', 'loaded': true, 'darkMode': false, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
-    x-init="
-         darkMode = JSON.parse(localStorage.getItem('darkMode'));
-         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+<body x-data="getVacacionesData()"
+    x-init="$watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
     :class="{'dark bg-gray-900': darkMode === true}">
     <!-- ===== Preloader Start ===== -->
     <include src="../includes/preloader.html"></include>
@@ -40,9 +64,15 @@
                 <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
                     <div class="grid grid-cols-12 gap-4 md:gap-6">
 
-                        <!-- Vacaciones Panel Component -->
-                        <include src="../includes/vacaciones-panel.html" />
-                        <!-- End Vacaciones Panel -->
+                        <!-- Vacaciones Wizard (Solicitar) -->
+                        <template x-if="view === 'solicitar'">
+                            <include src="../includes/vacaciones-panel.html" />
+                        </template>
+
+                        <!-- Vacaciones Lists (Firmar, Ver...) -->
+                        <template x-if="view !== 'solicitar'">
+                            <include src="../includes/vacaciones-list.html" />
+                        </template>
 
                     </div>
                 </div>
@@ -52,6 +82,7 @@
         <!-- ===== Content Area End ===== -->
     </div>
     <!-- ===== Page Wrapper End ===== -->
+
 </body>
 
 </html>

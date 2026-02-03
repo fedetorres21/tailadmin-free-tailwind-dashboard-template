@@ -1,0 +1,41 @@
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <template x-for="sup in supervisions" :key="sup.id">
+        <div
+            class="bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-100 dark:border-gray-700 shadow-xl shadow-brand-500/5 flex flex-col items-center text-center space-y-4 transition-all hover:shadow-2xl hover:shadow-brand-500/10 active:scale-[0.98]">
+
+            <div class="space-y-4 flex-1">
+                <div class="space-y-2">
+                    <h2 class="text-xl font-extrabold tracking-tight text-gray-900 dark:text-white leading-tight"
+                        x-text="sup.center"></h2>
+
+                    <div class="flex flex-col items-center gap-1">
+                        <div class="flex items-center gap-2 text-gray-500 dark:text-gray-400">
+                            <span class="text-xs font-bold uppercase tracking-wider">Fecha:</span>
+                            <span class="text-sm font-extrabold" x-text="sup.date"></span>
+                        </div>
+                        <div class="flex items-center gap-2 text-brand-500">
+                            <span class="text-xs font-bold uppercase tracking-wider text-gray-400">Puntuación:</span>
+                            <span class="text-sm font-extrabold" x-text="sup.score"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a :href="sup.pdfUrl"
+                class="w-full max-w-xs py-4 px-8 bg-brand-500 hover:bg-brand-600 text-white text-lg font-bold rounded-xl shadow-xl shadow-brand-500/30 transition-all duration-300 uppercase tracking-widest flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                        d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                </svg>
+                Descargar
+            </a>
+        </div>
+    </template>
+
+    <template x-if="supervisions.length === 0">
+        <div
+            class="col-span-full bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-100 dark:border-yellow-900/30 p-8 rounded-3xl text-center">
+            <p class="text-yellow-700 dark:text-yellow-400 font-bold">AVISO: No se han encontrado supervisiones.</p>
+        </div>
+    </template>
+</div>

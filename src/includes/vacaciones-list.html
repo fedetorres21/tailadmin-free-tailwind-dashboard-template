@@ -1,0 +1,202 @@
+<div x-data="{
+    activeTab: 'solicitadas', // 'solicitadas', 'aceptadas', 'rechazadas'
+    viewMode: 'solicitadas', // controlled by parent mostly, but we use this to know if we are in 'firmar' or 'mis-vacaciones'
+    vacations: [
+        { id: 1, client: 'Cdad. Prop. La Marina Urbis', start: '16-03-2026', end: '22-03-2026', returnDate: '23-03-2026', status: 'aceptadas', canSign: false },
+        { id: 2, client: 'Cdad. Prop. Residencial Chalets La Cornisa', start: '14-10-2025', end: '31-10-2025', returnDate: '01-11-2025', status: 'aceptadas', canSign: false },
+        { id: 3, client: 'Rumardi / Kimono (C.C. Los Alisios)', start: '05-08-2024', end: '10-09-2024', returnDate: '11-09-2024', status: 'aceptadas', canSign: false },
+        { id: 4, client: 'Cdad. Prop. La Marina Urbis', start: '28-01-2026', end: '28-01-2026', returnDate: '29-01-2026', status: 'firmar', canSign: true },
+        { id: 5, client: 'Cdad. Prop. La Marina Urbis', start: '04-08-2021', end: '11-09-2021', returnDate: '12-09-2021', status: 'rechazadas', canSign: false }
+    ],
+    get title() {
+        if (this.viewMode === 'firmar') return 'Firmar vacaciones aceptadas';
+        if (this.viewMode === 'mis-vacaciones') return 'Mis Vacaciones';
+        return 'Vacaciones';
+    },
+    get headers() {
+         let base = ['Cliente', 'Fecha de inicio', 'Fecha fin', 'Fecha incorporación'];
+         if (this.viewMode === 'firmar') base.push('Firmar');
+         else base.push('Estado');
+         return base;
+    },
+    get currentFilter() {
+        if (this.viewMode === 'firmar') return 'firmar';
+        return this.activeTab;
+    },
+    get filteredVacations() {
+        return this.vacations.filter(v => v.status === this.currentFilter);
+    },
+    init() {
+        // Parse view mode from URL or parent state if needed. 
+        // For now, it will be controlled by the parent view/URL param logic injecting 'viewMode'
+        const urlParams = new URLSearchParams(window.location.search);
+        const view = urlParams.get('view');
+        if (view === 'firmar') this.viewMode = 'firmar';
+        else if (view === 'mis-vacaciones') this.viewMode = 'mis-vacaciones';
+        
+        // Default tab is 'solicitadas' which is set in data property
+    }
+}" class="col-span-12">
+
+    <!-- Header & Tabs -->
+    <div class="mb-6">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <h2 class="text-xl font-extrabold text-gray-900 dark:text-white" x-text="title"></h2>
+
+            <!-- Tabs for Mis Vacaciones -->
+            <div x-show="viewMode === 'mis-vacaciones'"
+                class="flex p-1.5 space-x-1.5 bg-gray-100 dark:bg-gray-700/50 rounded-xl max-w-md w-full sm:w-auto">
+                <button @click="activeTab = 'solicitadas'"
+                    :class="activeTab === 'solicitadas' ? 'bg-white dark:bg-gray-600 text-brand-600 dark:text-white shadow-sm' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'"
+                    class="flex-1 py-2.5 px-4 rounded-lg text-xs font-bold transition-all text-center uppercase tracking-widest leading-none">
+                    Solicitadas
+                </button>
+                <button @click="activeTab = 'aceptadas'"
+                    :class="activeTab === 'aceptadas' ? 'bg-white dark:bg-gray-600 text-brand-600 dark:text-white shadow-sm' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'"
+                    class="flex-1 py-2.5 px-4 rounded-lg text-xs font-bold transition-all text-center uppercase tracking-widest leading-none">
+                    Aceptadas
+                </button>
+                <button @click="activeTab = 'rechazadas'"
+                    :class="activeTab === 'rechazadas' ? 'bg-white dark:bg-gray-600 text-brand-600 dark:text-white shadow-sm' : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'"
+                    class="flex-1 py-2.5 px-4 rounded-lg text-xs font-bold transition-all text-center uppercase tracking-widest leading-none">
+                    Rechazadas
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Desktop Table -->
+    <div
+        class="hidden md:block bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="border-b border-gray-100 dark:border-gray-700">
+                    <template x-for="header in headers">
+                        <th class="p-5 text-xs font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400"
+                            x-text="header"></th>
+                    </template>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                <template x-for="vacation in filteredVacations" :key="vacation.id">
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                        <td class="p-5">
+                            <span class="text-sm font-bold text-gray-900 dark:text-white"
+                                x-text="vacation.client"></span>
+                        </td>
+                        <td class="p-5">
+                            <span class="text-sm font-medium text-gray-600 dark:text-gray-300"
+                                x-text="vacation.start"></span>
+                        </td>
+                        <td class="p-5">
+                            <span class="text-sm font-medium text-gray-600 dark:text-gray-300"
+                                x-text="vacation.end"></span>
+                        </td>
+                        <td class="p-5">
+                            <span class="text-sm font-medium text-gray-600 dark:text-gray-300"
+                                x-text="vacation.returnDate"></span>
+                        </td>
+
+                        <!-- Action / Status Column -->
+                        <td class="p-5">
+                            <template x-if="viewMode === 'firmar'">
+                                <button class="text-brand-500 hover:text-brand-600 transition-colors" title="Firmar">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                                        </path>
+                                    </svg>
+                                </button>
+                            </template>
+
+                            <template x-if="viewMode === 'mis-vacaciones'">
+                                <div>
+                                    <span x-show="vacation.status === 'solicitadas'"
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300">
+                                        Solicitada
+                                    </span>
+                                    <span x-show="vacation.status === 'aceptadas'"
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                                        Aceptada
+                                    </span>
+                                    <span x-show="vacation.status === 'rechazadas'"
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
+                                        Rechazada
+                                    </span>
+                                </div>
+                            </template>
+                        </td>
+                    </tr>
+                </template>
+                <tr x-show="filteredVacations.length === 0">
+                    <td :colspan="headers.length" class="p-8 text-center text-gray-500 dark:text-gray-400">
+                        No hay vacaciones en este estado.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mobile Cards -->
+    <div class="md:hidden space-y-4">
+        <template x-for="vacation in filteredVacations" :key="vacation.id">
+            <div
+                class="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-100 dark:border-gray-700 shadow-sm relative">
+
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-base font-bold text-gray-900 dark:text-white leading-tight pr-8"
+                        x-text="vacation.client"></h3>
+
+                    <!-- Action / Status Mobile -->
+                    <div class="flex-shrink-0">
+                        <button x-show="viewMode === 'firmar'"
+                            class="text-brand-500 hover:text-brand-600 p-1 bg-brand-50 dark:bg-brand-900/20 rounded-lg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                                </path>
+                            </svg>
+                        </button>
+
+                        <div x-show="viewMode === 'mis-vacaciones'">
+                            <span x-show="vacation.status === 'solicitadas'"
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300">
+                                Solicitada
+                            </span>
+                            <span x-show="vacation.status === 'aceptadas'"
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                                Aceptada
+                            </span>
+                            <span x-show="vacation.status === 'rechazadas'"
+                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
+                                Rechazada
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <span class="block text-xs uppercase tracking-wide text-gray-400 font-bold mb-1">Inicio</span>
+                        <span class="font-medium text-gray-900 dark:text-white" x-text="vacation.start"></span>
+                    </div>
+                    <div>
+                        <span class="block text-xs uppercase tracking-wide text-gray-400 font-bold mb-1">Fin</span>
+                        <span class="font-medium text-gray-900 dark:text-white" x-text="vacation.end"></span>
+                    </div>
+                    <div class="col-span-2 pt-2 mt-2 border-t border-gray-50 dark:border-gray-700">
+                        <span
+                            class="block text-xs uppercase tracking-wide text-gray-400 font-bold mb-1">Incorporación</span>
+                        <span class="font-medium text-brand-500" x-text="vacation.returnDate"></span>
+                    </div>
+                </div>
+
+            </div>
+        </template>
+        <div x-show="filteredVacations.length === 0"
+            class="text-center py-10 px-4 bg-gray-50 dark:bg-gray-800/50 rounded-2xl border border-dashed border-gray-200 dark:border-gray-700 text-gray-500">
+            No hay vacaciones en este estado.
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,113 @@
+<div x-data="{ 
+    markAll(category, checked) {
+        category.tasks.forEach(t => t.checked = checked);
+    }
+}" class="space-y-6 pb-24">
+
+    <!-- Top Bar -->
+    <div
+        class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 sticky top-0 z-10 bg-gray-50/80 dark:bg-gray-900/80 backdrop-blur-md py-4 transition-all">
+        <button @click="view = 'list'"
+            class="w-fit flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 font-bold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition shadow-sm shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            <span class="text-sm">Atrás</span>
+        </button>
+
+        <div class="flex flex-col sm:items-end flex-1 min-w-0">
+            <span class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]"
+                x-text="selectedChecklist.code"></span>
+            <span class="text-sm font-bold text-brand-500 wrap-break-word line-clamp-2 sm:text-right"
+                x-text="selectedChecklist.center"></span>
+        </div>
+    </div>
+
+    <!-- Tareas Section -->
+    <div class="space-y-8">
+        <div class="text-center">
+            <h2 class="text-2xl font-extrabold text-gray-900 dark:text-white uppercase tracking-tight">Tareas</h2>
+        </div>
+
+        <template x-for="category in selectedChecklist.categories" :key="category.name">
+            <div
+                class="bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-xl overflow-hidden">
+                <!-- Accordion Header -->
+                <button @click="category.isOpen = !category.isOpen"
+                    class="w-full px-6 py-4 flex items-center justify-between bg-gray-50/50 dark:bg-gray-900/50 hover:bg-gray-100/50 dark:hover:bg-gray-900/80 transition-colors">
+                    <span class="text-lg font-extrabold text-gray-900 dark:text-white" x-text="category.name"></span>
+                    <svg class="w-6 h-6 text-gray-400 transition-transform duration-300"
+                        :class="category.isOpen ? 'rotate-180' : ''" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+
+                <!-- Accordion Content -->
+                <div x-show="category.isOpen" x-collapse>
+                    <div class="p-4 md:p-6 space-y-4">
+                        <template x-for="task in category.tasks" :key="task.id">
+                            <div
+                                class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-900/50 rounded-2xl border border-gray-100 dark:border-gray-800 group transition-all">
+                                <div class="space-y-1">
+                                    <h4 class="text-base font-bold text-gray-900 dark:text-white" x-text="task.name">
+                                    </h4>
+                                    <div class="flex flex-wrap gap-x-4 gap-y-1">
+                                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Freq:
+                                            <span class="text-gray-500 dark:text-gray-300"
+                                                x-text="task.frequency"></span>
+                                        </p>
+                                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Última:
+                                            <span class="text-gray-500 dark:text-gray-300"
+                                                x-text="task.lastDate"></span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <button @click="task.checked = !task.checked"
+                                    class="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 shadow-lg"
+                                    :class="task.checked ? 'bg-green-500 text-white shadow-green-500/30' : 'bg-red-500 text-white shadow-red-500/30'">
+                                    <svg x-show="task.checked" class="w-6 h-6" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                            d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <svg x-show="!task.checked" class="w-6 h-6" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="9" stroke-width="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                        </template>
+
+                        <!-- Bulk Actions -->
+                        <div class="grid grid-cols-2 gap-4 pt-4">
+                            <button @click="markAll(category, true)"
+                                class="flex items-center justify-center gap-2 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl transition-all active:scale-95 shadow-lg shadow-emerald-500/20">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                        d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="uppercase tracking-widest text-[10px]">Marcar todo</span>
+                            </button>
+                            <button @click="markAll(category, false)"
+                                class="flex items-center justify-center gap-2 py-3 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-xl transition-all active:scale-95 shadow-lg shadow-rose-500/20">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="9" stroke-width="2.5"></circle>
+                                </svg>
+                                <span class="uppercase tracking-widest text-[10px]">Desmarcar todo</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <!-- Finalize Button -->
+    <div class="pt-8 flex justify-center">
+        <button @click="showSignatureModal = true"
+            class="w-full max-w-sm py-4 bg-brand-500 hover:bg-brand-600 active:scale-95 text-white text-lg font-bold rounded-xl shadow-2xl shadow-brand-500/30 transition-all duration-300 uppercase tracking-widest">
+            Terminar
+        </button>
+    </div>
+</div>

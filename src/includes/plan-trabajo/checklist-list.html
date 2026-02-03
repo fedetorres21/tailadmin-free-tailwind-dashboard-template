@@ -1,0 +1,28 @@
+<div class="grid grid-cols-1 gap-6">
+    <template x-for="checklist in checklists" :key="checklist.id">
+        <div
+            class="bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-100 dark:border-gray-700 shadow-xl shadow-brand-500/5 flex flex-col items-center text-center space-y-4 transition-all hover:shadow-2xl hover:shadow-brand-500/10 active:scale-[0.98]">
+
+            <div class="space-y-4">
+                <div class="space-y-1">
+                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest"
+                        x-text="'Orden: ' + checklist.code"></p>
+                    <h2 class="text-xl font-extrabold tracking-tight text-gray-900 dark:text-white leading-tight"
+                        x-text="checklist.center"></h2>
+                </div>
+            </div>
+
+            <button @click="enterChecklist(checklist)"
+                class="w-full max-w-xs py-4 px-8 bg-brand-500 hover:bg-brand-600 text-white text-lg font-bold rounded-xl shadow-xl shadow-brand-500/30 transition-all duration-300 uppercase tracking-widest">
+                Entrar
+            </button>
+        </div>
+    </template>
+
+    <template x-if="checklists.length === 0">
+        <div
+            class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-100 dark:border-yellow-900/30 p-8 rounded-3xl text-center">
+            <p class="text-yellow-700 dark:text-yellow-400 font-bold">AVISO: No se han encontrado planes de trabajo.</p>
+        </div>
+    </template>
+</div>
