@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Kilometraje - Portal Empleado v2</title>
+    <script>
+        function getKilometrajeData() {
+            const params = new URLSearchParams(window.location.search);
+            const view = params.get('view') || 'ver';
+            let page = view === 'introducir' ? 'kilometrajeNuevo' : 'kilometrajeListado';
+
+            let darkMode = false;
+            try {
+                darkMode = JSON.parse(localStorage.getItem('darkMode'));
+            } catch (e) {
+                console.warn('LocalStorage access denied', e);
+            }
+
+            return {
+                view: view,
+                page: page,
+                loaded: true,
+                darkMode: darkMode || false,
+                stickyMenu: false,
+                sidebarToggle: false,
+                scrollTop: false,
+                selectedVehicle: '',
+                vehicles: ['Ford Transit Custom (6330LDD)', 'Toyota Proace (1234ABC)'],
+                mileageRecords: [
+                    {
+                        id: 1,
+                        vehicle: 'Ford Transit Custom (6330LDD)',
+                        km: '10.040',
+                        date: '09/30/2025 16:15:26',
+                        image: 'ford_transit_custom_milage_1770119438902.png'
+                    },
+                    {
+                        id: 2,
+                        vehicle: 'Ford Transit Custom (6330LDD)',
+                        km: '10.020',
+                        date: '09/19/2025 09:58:32',
+                        image: 'ford_transit_custom_milage_1770119438902.png'
+                    },
+                    {
+                        id: 3,
+                        vehicle: 'Ford Transit Custom (6330LDD)',
+                        km: '10.000',
+                        date: '09/18/2025 07:11:31',
+                        image: 'ford_transit_custom_milage_1770119438902.png'
+                    }
+                ]
+            };
+        }
+    </script>
+</head>
+
+<body x-data="getKilometrajeData()"
+    x-init="$watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'dark bg-gray-900': darkMode === true}">
+
+    <!-- ===== Preloader Start ===== -->
+    <include src="../includes/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="flex h-screen overflow-hidden">
+        <!-- ===== Sidebar Start ===== -->
+        <include src="../includes/sidebar.html"></include>
+        <!-- ===== Sidebar End ===== -->
+
+        <!-- ===== Content Area Start ===== -->
+        <div class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
+            <!-- Small Device Overlay Start -->
+            <include src="../includes/overlay.html" />
+            <!-- Small Device Overlay End -->
+
+            <!-- ===== Header Start ===== -->
+            <include src="../includes/header.html" />
+            <!-- ===== Header End ===== -->
+
+            <!-- ===== Main Content Start ===== -->
+            <main>
+                <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6 lg:p-8">
+
+                    <!-- Header -->
+                    <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <h1 class="text-xl font-extrabold text-gray-900 dark:text-white"
+                                x-text="view === 'introducir' ? 'Introducir Kilometraje' : 'Listado de Kilometraje'">
+                            </h1>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1"
+                                x-text="view === 'introducir' ? 'Registre los kilómetros actuales de su vehículo' : 'Historial de registros de kilometraje'">
+                            </p>
+                        </div>
+                        <template x-if="view === 'ver'">
+                            <a href="kilometraje.html?view=introducir"
+                                class="w-fit py-3 px-6 bg-brand-500 hover:bg-brand-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-brand-500/20 transition-all active:scale-95 flex items-center gap-2 uppercase tracking-widest">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                        d="M12 4v16m8-8H4"></path>
+                                </svg>
+                                Introducir KM
+                            </a>
+                        </template>
+                        <template x-if="view === 'introducir'">
+                            <a href="kilometraje.html?view=ver"
+                                class="w-fit py-3 px-6 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-sm font-bold rounded-xl transition-all active:scale-95 flex items-center gap-2 uppercase tracking-widest">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                        d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                                </svg>
+                                Ver Registros
+                            </a>
+                        </template>
+                    </div>
+
+                    <template x-if="view === 'ver'">
+                        <include src="../includes/kilometraje-list.html" />
+                    </template>
+
+                    <template x-if="view === 'introducir'">
+                        <include src="../includes/kilometraje-nuevo.html" />
+                    </template>
+
+                </div>
+            </main>
+            <!-- ===== Main Content End ===== -->
+        </div>
+        <!-- ===== Content Area End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+
+</body>
+
+</html>
